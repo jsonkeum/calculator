@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <title>Javascript Calculator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+        body {
+          background-color: black;
+          font-family: "Roboto Condensed", sans-serif;
+          color:white;
+        }
+        #calculatorBody {
+          background-color: #EB40B8;
+          height:40em;
+          width:20em;
+          margin-top:5%;
+        }
+        #screen {
+          min-height:35%;
+          background-color:black;
+          margin-bottom:1em;
+          margin-top:1em;
+          position:relative;
+        }
+        #currentInput {
+          font-size:3em;
+          bottom:0;
+          right:0;
+          position:absolute;
+        }
+        #memoryString {
+          font-size:1.5em;
+          top:10px;
+          padding-left:0px;
+        }
+        #top {
+          height:1px;
+        }
+        .buttons {
+          width:100%;
+        }
+        .button-row > div {
+          background-color:black;
+          color:white;
+          font-size:3em;
+          text-align:center;
+          border: 1px solid rgba(235,64,184, 0.25);
+          cursor:pointer;
+        }
+        .button-row >div:active {
+          background-color:#40ea72;
+          color:#EB40B8;
+        }
+        .button-row .activated {
+          background-color:#40ea72;
+          color:#EB40B8;
+        }
+    </style>
+</head>
+<body>
+<div id ="calculatorBody" class="container">
+  <div id="top"></div>
+  <div id="screen" class="container">
+    <div id="memoryString" class="container-fluid"></div>
+    <div id="currentInput" class="container-fluid">A Javascript Calculator</div>
+  </div>
+  <div class="row container-fluid button-row">
+    <div class="col-xs-6 col-sm-6 col-md-6" id = "c">C</div>
+    <div class="col-xs-6 col-sm-6 col-md-6" id = "equals">=</div>
+  </div>
+  <div class="row container-fluid button-row">
+    <div class="col-xs-3 col-sm-3 col-md-3" id = "7">7</div>
+    <div class="col-xs-3 col-sm-3 col-md-3" id = "8">8</div>
+    <div class="col-xs-3 col-sm-3 col-md-3" id = "9">9</div>
+    <div class="col-xs-3 col-sm-3 col-md-3" id = "plus">+</div>
+  </div>
+  <div class="row container-fluid button-row">
+    <div class="col-xs-3 col-sm-3 col-md-3" id = "4">4</div>
+    <div class="col-xs-3 col-sm-3 col-md-3" id = "5">5</div>
+    <div class="col-xs-3 col-sm-3 col-md-3" id = "6">6</div>
+    <div class="col-xs-3 col-sm-3 col-md-3" id = "minus">-</div>
+  </div>
+  <div class="row container-fluid button-row">
+    <div class="col-xs-3 col-sm-3 col-md-3" id = "1">1</div>
+    <div class="col-xs-3 col-sm-3 col-md-3" id = "2">2</div>
+    <div class="col-xs-3 col-sm-3 col-md-3" id = "3">3</div>
+    <div class="col-xs-3 col-sm-3 col-md-3" id = "times">*</div>
+  </div>
+  <div class="row container-fluid button-row">
+    <div class="col-xs-3 col-sm-3 col-md-3" id = "period">.</div>
+    <div class="col-xs-3 col-sm-3 col-md-3" id = "0">0</div>
+    <div class="col-xs-3 col-sm-3 col-md-3" id = "modulo">%</div>
+    <div class="col-xs-3 col-sm-3 col-md-3" id = "divide">/</div>
+  </div>
+  <p style="margin-top:15px">Written by QuanchiFootball - 2017</p>
+</div>
+<!-- 
+    Start of JS
+-->
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<script>
+$(document).ready(function(){
+  var arrayKey = [
+    {id : "1",cont : "1"},{id : "2",cont : "2"},{id : "3",cont : "3"},{id : "4",cont : "4"},{id : "5",cont : "5"},{id : "6",cont : "6"},{id : "7",cont : "7"},{id : "8",cont : "8"},{id : "9",cont : "9"},{id : "0",cont : "0"},{id : "period",cont : "."},{id : "c",cont : "C"},{id : "equals",cont : "="},{id : "plus",cont : "+"},{id : "minus",cont : "-"},{id : "times",cont : "*"},{id : "divide",cont : "/"},{id : "modulo",cont : "%"}
+  ];
+  var keyLight = function(char){
+    var id = "";
+    arrayKey.forEach(function(object){
+      if(object.cont == char.toUpperCase()){
+        id = "#" + object.id;
+        $(id).addClass("activated");
+      } 
+    });
+    $("body").keyup(function(){
+      $(id).removeClass("activated");
+    });
+  };
+  
+  var nextLine = function(char){
+    if($("#currentInput").text().length > 21){
+      $("#currentInput").text("Limit Exceeded");
+      $("#memoryString").text("");
+      return;
+    }
+    if($("#currentInput").text().length % 11 === 0){
+      $("#currentInput").append("<br>" + char);
+    } else {
+      $("#currentInput").append(char);
+    }
+  }
+  
+  var returnResults = function(){
+    var total = $("#memoryString").text() + " " + $("#currentInput").text();
+    var result = eval(total) + "";
+    var final = "";
+    result = result.split("");
+    var resultArr = [];
+    if(result.length > 21){
+      $("#currentInput").text("Limit Exceeded");
+      $("#memoryString").text("");
+      return;
+    }
+    if(result.length >= 11){
+      resultArr.push(result.splice(0, 11).join("") + "<br>");
+    }
+    resultArr.push(result.splice(0, 11).join(""));
+    
+    for (var i = 0; i< resultArr.length; i++){
+      final += resultArr[i];
+    }
+    console.log(final);
+    $("#currentInput").text("");
+    $("#memoryString").text("");
+    $("#currentInput").html(final);
+  }
+  $(".button-row > div").on("click", function(){
+    var greetings = $("#currentInput").text();
+    if(!greetings.match(/[0-9]/)){
+      $("#currentInput").text("");
+    }
+    var char = $(this).text();
+    switch(char){
+      case "C":
+        $("#currentInput").text("");
+        $("#memoryString").text("");
+        break;
+      case ".":
+        var currentInput =  $("#currentInput").text();
+        if(!currentInput.includes(char) && currentInput != ""){
+          $("#currentInput").append(char);
+        } else if (!currentInput.includes(char) && currentInput == ""){
+          $("#currentInput").append("0" + char);
+        }
+        break;
+      case "+":
+      case "-":
+      case "/":
+      case "*":
+      case "%":
+        if($("#currentInput").text() !== ""){
+          var current = $("#currentInput").text();
+          if(Number(current) == parseInt(current)){
+            current = parseInt(current);
+          }
+          $("#memoryString").append(current + " " + char + " ");
+          $("#currentInput").text("");
+        }
+        break;
+      case "=":
+        returnResults();
+        break;
+      default:
+        nextLine(char);
+        break;
+    }
+    
+  });
+  $("body").keypress(function(event){
+    var key = event.keyCode;
+    var char = String.fromCharCode(key);
+    var greetings = $("#currentInput").text();
+    if(!greetings.match(/[0-9]/)){
+      $("#currentInput").text("");
+    }
+    switch(key){
+      case 67:
+      case 99:
+        keyLight(char);
+        $("#currentInput").text("");
+        $("#memoryString").text("");
+        break;
+      case 46:
+        keyLight(char);
+        var currentInput =  $("#currentInput").text();
+        if(!currentInput.includes(char) && currentInput != ""){
+          $("#currentInput").append(char);
+        } else if (!currentInput.includes(char) && currentInput == ""){
+          $("#currentInput").append("0" + char);
+        }
+        break;
+      case 42:
+      case 43:
+      case 45:
+      case 47:
+      case 37:
+        keyLight(char);
+        if($("#currentInput").text() !== ""){
+          var current = $("#currentInput").text();
+          if(Number(current) == parseInt(current)){
+            current = parseInt(current);
+          }
+          $("#memoryString").append(current + " " + char + " ");
+          $("#currentInput").text("");
+        }
+        break;
+      case 61:
+      case 13:
+        keyLight(char);
+        returnResults();
+        break;
+      default:
+        if(key >= 48 && key <= 57){
+          keyLight(char);
+          nextLine(char);
+        }
+        break;
+    }
+  });
+});
+</script>
+</body>
+</html>
