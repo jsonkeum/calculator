@@ -116,10 +116,12 @@ $(document).ready(function(){
         break;
       case ".":
         var currentInput =  $("#currentInput").text();
-        if(!currentInput.includes(char) && currentInput != ""){
-          $("#currentInput").append(char);
-        } else if (!currentInput.includes(char) && currentInput == ""){
-          $("#currentInput").append("0" + char);
+        if(!currentInput.includes(char)){
+            if(!currentInput.match(/[^0]/) || currentInput == ""){
+                $("#currentInput").text("0.");
+            } else {
+                $("#currentInput").append(char);
+            }            
         }
         break;
       case "+":
@@ -164,10 +166,12 @@ $(document).ready(function(){
       case 46:
         keyLight(char);
         var currentInput =  $("#currentInput").text();
-        if(!currentInput.includes(char) && currentInput != ""){
-          $("#currentInput").append(char);
-        } else if (!currentInput.includes(char) && currentInput == ""){
-          $("#currentInput").append("0" + char);
+        if(!currentInput.includes(char)){
+            if(!currentInput.match(/[^0]/) || currentInput == ""){
+                $("#currentInput").text("0.");
+            } else {
+                $("#currentInput").append(char);
+            }            
         }
         break;
       case 42:
