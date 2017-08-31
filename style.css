@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+body {
+  background-color: black;
+  font-family: "Roboto Condensed", sans-serif;
+  color:white;
+}
+#calculatorBody {
+  background-color: #EB40B8;
+  height:40em;
+  width:375px;
+  margin-top:5%;
+    border-radius:10px;
+}
+#screen {
+  min-height:35%;
+  background-color:black;
+  margin-bottom:13px;
+  margin-top:1em;
+  position:relative;
+}
+#currentInput {
+  font-size:3em;
+  bottom:0;
+  right:0;
+  position:absolute;
+}
+#memoryString {
+  font-size:1.5em;
+  top:10px;
+  padding-left:0px;
+}
+#top {
+  height:1px;
+}
+table {
+  width:100%;
+}
+.button-row > td {
+  background-color:black;
+  color:white;
+  font-size:3em;
+  text-align:center;
+  border: 1px solid rgba(235,64,184, 0.25);
+  cursor:pointer;
+  width:10%;
+}
+.button-row > td:active {
+  background-color:#40ea72;
+  color:#EB40B8;
+}
+.button-row .activated {
+  background-color:#40ea72;
+  color:#EB40B8;
+}

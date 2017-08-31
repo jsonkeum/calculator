@@ -3,60 +3,10 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
     <title>Javascript Calculator</title>
     <style>
-        @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
-        body {
-          background-color: black;
-          font-family: "Roboto Condensed", sans-serif;
-          color:white;
-        }
-        #calculatorBody {
-          background-color: #EB40B8;
-          height:40em;
-          width:20em;
-          margin-top:5%;
-        }
-        #screen {
-          min-height:35%;
-          background-color:black;
-          margin-bottom:1em;
-          margin-top:1em;
-          position:relative;
-        }
-        #currentInput {
-          font-size:3em;
-          bottom:0;
-          right:0;
-          position:absolute;
-        }
-        #memoryString {
-          font-size:1.5em;
-          top:10px;
-          padding-left:0px;
-        }
-        #top {
-          height:1px;
-        }
-        .buttons {
-          width:100%;
-        }
-        .button-row > div {
-          background-color:black;
-          color:white;
-          font-size:3em;
-          text-align:center;
-          border: 1px solid rgba(235,64,184, 0.25);
-          cursor:pointer;
-        }
-        .button-row >div:active {
-          background-color:#40ea72;
-          color:#EB40B8;
-        }
-        .button-row .activated {
-          background-color:#40ea72;
-          color:#EB40B8;
-        }
+        
     </style>
 </head>
 <body>
@@ -66,35 +16,37 @@
     <div id="memoryString" class="container-fluid"></div>
     <div id="currentInput" class="container-fluid">A Javascript Calculator</div>
   </div>
-  <div class="row container-fluid button-row">
-    <div class="col-xs-6 col-sm-6 col-md-6" id = "c">C</div>
-    <div class="col-xs-6 col-sm-6 col-md-6" id = "equals">=</div>
-  </div>
-  <div class="row container-fluid button-row">
-    <div class="col-xs-3 col-sm-3 col-md-3" id = "7">7</div>
-    <div class="col-xs-3 col-sm-3 col-md-3" id = "8">8</div>
-    <div class="col-xs-3 col-sm-3 col-md-3" id = "9">9</div>
-    <div class="col-xs-3 col-sm-3 col-md-3" id = "plus">+</div>
-  </div>
-  <div class="row container-fluid button-row">
-    <div class="col-xs-3 col-sm-3 col-md-3" id = "4">4</div>
-    <div class="col-xs-3 col-sm-3 col-md-3" id = "5">5</div>
-    <div class="col-xs-3 col-sm-3 col-md-3" id = "6">6</div>
-    <div class="col-xs-3 col-sm-3 col-md-3" id = "minus">-</div>
-  </div>
-  <div class="row container-fluid button-row">
-    <div class="col-xs-3 col-sm-3 col-md-3" id = "1">1</div>
-    <div class="col-xs-3 col-sm-3 col-md-3" id = "2">2</div>
-    <div class="col-xs-3 col-sm-3 col-md-3" id = "3">3</div>
-    <div class="col-xs-3 col-sm-3 col-md-3" id = "times">*</div>
-  </div>
-  <div class="row container-fluid button-row">
-    <div class="col-xs-3 col-sm-3 col-md-3" id = "period">.</div>
-    <div class="col-xs-3 col-sm-3 col-md-3" id = "0">0</div>
-    <div class="col-xs-3 col-sm-3 col-md-3" id = "modulo">%</div>
-    <div class="col-xs-3 col-sm-3 col-md-3" id = "divide">/</div>
-  </div>
-  <p style="margin-top:15px">Written by QuanchiFootball - 2017</p>
+  <table>
+      <tr class="button-row">
+        <td style="border-top-left-radius:10px" colspan="2" id = "c">C</td>
+        <td style="border-top-right-radius:10px" colspan="2" id = "equals">=</td>
+      </tr>
+      <tr class="button-row">
+        <td id = "7">7</td>
+        <td id = "8">8</td>
+        <td id = "9">9</td>
+        <td id = "plus">+</td>
+      </tr>
+      <tr class="button-row">
+        <td id = "4">4</td>
+        <td id = "5">5</td>
+        <td id = "6">6</td>
+        <td id = "minus">-</td>
+      </tr>
+      <tr class="button-row">
+        <td id = "1">1</td>
+        <td id = "2">2</td>
+        <td id = "3">3</td>
+        <td id = "times">*</td>
+      </tr>
+      <tr class="button-row">
+        <td style="border-bottom-left-radius:10px" id = "period">.</td>
+        <td id = "0">0</td>
+        <td id = "modulo">%</td>
+        <td style="border-bottom-right-radius:10px" id = "divide">/</td>
+      </tr>
+  </table>
+  <p class="text-center" style="margin-top:15px">Written by QuanchiFootball - 2017</p>
 </div>
 <!-- 
     Start of JS
@@ -155,7 +107,7 @@ $(document).ready(function(){
     $("#memoryString").text("");
     $("#currentInput").html(final);
   }
-  $(".button-row > div").on("click", function(){
+  $(".button-row > td").on("click", function(){
     var greetings = $("#currentInput").text();
     if(!greetings.match(/[0-9]/)){
       $("#currentInput").text("");
@@ -189,7 +141,9 @@ $(document).ready(function(){
         }
         break;
       case "=":
-        returnResults();
+        if($("#currentInput").text() !== ""){
+            returnResults();
+        }
         break;
       default:
         nextLine(char);
