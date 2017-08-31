@@ -124,12 +124,12 @@ $(document).ready(function(){
   };
   
   var nextLine = function(char){
-    if($("#currentInput").text().length > 21){
+    if($("#currentInput").text().length > 27){
       $("#currentInput").text("Limit Exceeded");
       $("#memoryString").text("");
       return;
     }
-    if($("#currentInput").text().length % 11 === 0){
+    if($("#currentInput").text().length % 14 === 0){
       $("#currentInput").append("<br>" + char);
     } else {
       $("#currentInput").append(char);
@@ -142,20 +142,19 @@ $(document).ready(function(){
     var final = "";
     result = result.split("");
     var resultArr = [];
-    if(result.length > 21){
+    if(result.length > 27){
       $("#currentInput").text("Limit Exceeded");
       $("#memoryString").text("");
       return;
     }
-    if(result.length >= 11){
-      resultArr.push(result.splice(0, 11).join("") + "<br>");
+    if(result.length >= 14){
+      resultArr.push(result.splice(0, 14).join("") + "<br>");
     }
-    resultArr.push(result.splice(0, 11).join(""));
+    resultArr.push(result.splice(0, 14).join(""));
     
     for (var i = 0; i< resultArr.length; i++){
       final += resultArr[i];
     }
-    console.log(final);
     $("#currentInput").text("");
     $("#memoryString").text("");
     $("#currentInput").html(final);
