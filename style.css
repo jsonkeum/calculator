@@ -17,6 +17,7 @@ body {
   margin-bottom:13px;
   margin-top:1em;
   position:relative;
+  background:rgb(40, 40, 40);
 }
 #currentInput {
   font-size:3em;
